@@ -1,28 +1,54 @@
-import React from "react";
-import AddTodo from "./components/AddTodo";
-import TodoList from "./components/TodoList";
+"use client";
+
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import Container from "./components/Container";
-import TodoProvider from "@/context/TodoListContext";
 
 const Home = () => {
-  return (
-    <div className="border bg-gray-50 h-screen flex flx-col p-4 items-center justify-center">
-      <div className="flex flex-col w-full h-screen mt-4 gap-2">
-        <h1 className="w-full flex justify-center items-center text-gray-700 font-bold text-2xl mb-2">
-         Mojiofski Todo App :)
-        </h1>
+  const [nameInput, setNameInput] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
 
-        <TodoProvider>
-          <Container>
-            <div>
-              <AddTodo />
-            </div>
-            <div>
-              <TodoList />
-            </div>
-          </Container>
-        </TodoProvider>
-      </div>
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!nameInput.trim()) {
+      setError("please enter your name");
+      return;
+    }
+
+    setError("");
+    localStorage.setItem("username", nameInput);
+
+    router.push("./todo");
+  };
+
+  return (
+    <div className="flex flex-col w-full h-screen bg-white items-center justify-center p-4">
+      <h1 className="text-gray-600 font-semibold text-lg">
+        Welcome to your{" "}
+        <span className="text-red-500 font-semibold">Todo App :)</span>
+      </h1>
+      <Container>
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col w-full bg-white items-center justify-center gap-2 p-4"
+        >
+          <legend className="text-center text-gray-600">
+            please enter your name
+            <input
+              className="w-full border-2 rounded-md px-4 py-2 text-center text-gray-800"
+              type="text"
+              value={nameInput}
+              onChange={(e) => setNameInput(e.target.value)}
+            />
+          </legend>
+
+          <button className="bg-red-500 px-12 py-2 rounded-lg text-white">
+            Lets go
+          </button>
+          {error && <p className="text-red-500 ">{error}</p>}
+        </form>
+      </Container>
     </div>
   );
 };
