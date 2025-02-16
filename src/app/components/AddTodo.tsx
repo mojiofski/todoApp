@@ -25,7 +25,7 @@ const AddTodo = () => {
     <div>
       <form
         onSubmit={handleSubmit}
-        className="flex gap-3 items-center justify-center bg-gray-300 p-4 rounded-lg shadow-md w-full  "
+        className="flex gap-2 items-center justify-center bg-gray-300 px-6 py-4 rounded-lg shadow-md w-full  "
       >
         <input
           type="text"
