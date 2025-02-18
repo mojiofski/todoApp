@@ -6,6 +6,7 @@ import AddTodo from "../components/AddTodo";
 import TodoList from "../components/TodoList";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+import { IoMdLogOut } from "react-icons/io";
 
 const Todo = () => {
   const [email, setEmail] = useState<string | null>(null);
@@ -27,7 +28,7 @@ const Todo = () => {
   };
 
   return (
-    <div className="border bg-gray-50 h-screen flex flex-col p-4 items-center justify-center">
+    <div className="border h-screen flex flex-col p-4 items-center justify-center">
       {email ? (
         <div className="flex w-full bg-gray-500 p-4 rounded-lg items-center justify-between ">
           <p className="font-semibold text-white text-xl">{email}</p>
@@ -36,9 +37,9 @@ const Todo = () => {
               await supabase.auth.signOut();
               router.push("/");
             }}
-            className="text-white bg-red-500 px-4 py-1 rounded-md"
+            className="text-white bg-red-500 px-2 py-2 rounded-full text-lg"
           >
-            Logout
+            <IoMdLogOut />
           </button>
         </div>
       ) : (

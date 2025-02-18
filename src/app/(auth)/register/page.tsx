@@ -22,13 +22,13 @@ const Register = () => {
     if (error) {
       setError(error.message);
     } else {
-      console.log("User Registered:", data?.user); // حالا از data.user استفاده کنید
+      console.log("User Registered:", data?.user); 
       router.push("/confirm-email");
     }
   };
 
   return (
-    <div className="flex w-full max-w-md mx-auto h-[100vh] items-center ">
+    <div className="flex w-full max-w-md mx-auto h-[100vh] items-center p-4">
       <div className="flex flex-col bg-white w-full p-4 rounded-lg shadow-lg ">
         <h1 className="text-xl text-center">
           Register to{" "}

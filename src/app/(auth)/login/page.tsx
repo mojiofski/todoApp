@@ -22,14 +22,14 @@ const Login = () => {
     if (error) {
       setError(error.message);
     } else {
-      console.log("Logged in User:", data?.user); // استفاده از data.user
+      console.log("Logged in User:", data?.user); 
       router.push("/todo");
     }
   };
 
   return (
-    <div className="flex w-full max-w-md mx-auto h-[100vh] items-center ">
-      <div className="flex flex-col bg-white w-full p-4 rounded-lg shadow-lg ">
+    <div className="flex w-full max-w-md mx-auto h-[100vh] items-center p-4 ">
+      <div className="flex flex-col bg-white w-full rounded-lg shadow-lg p-4">
         <h1 className="text-xl text-center">
           Login to{" "}
           <span className="text-red-500 font-semibold">Todo App :)</span>
