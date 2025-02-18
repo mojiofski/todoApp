@@ -2,25 +2,40 @@
 
 import React, { useState } from "react";
 import { useTodoContext } from "@/context/TodoListContext";
-import { v4 as uuidv4 } from "uuid";
 import { IoMdAdd } from "react-icons/io";
+import { supabase } from "@/lib/supabase";
+
 const AddTodo = () => {
   const [todoInput, setTodoInput] = useState("");
   const todoContext = useTodoContext();
   if (!todoContext) return null;
   const { dispatch } = todoContext;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (todoInput.trim()) {
+    if (!todoInput.trim()) return;
+
+    const { data, error } = await supabase
+      .from("todos")
+      .insert([{ title: todoInput, complete: false }])
+      .select();
+
+    if (error) {
+      console.error("Error in inserting todo!", error.message);
+      return;
+    }
+
+    if (data && data.length > 0) {
       dispatch({
         type: "ADD_TODO",
-        payload: { id: uuidv4(), title: todoInput, complete: false },
+        payload: data[0], // ✅ todo را از دیتابیس می‌گیریم، شامل `id`
       });
-      setTodoInput("");
     }
+
+    setTodoInput("");
   };
 
+  
   return (
     <div>
       <form

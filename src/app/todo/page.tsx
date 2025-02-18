@@ -4,34 +4,71 @@ import React, { useEffect, useState } from "react";
 import Container from "../components/Container";
 import AddTodo from "../components/AddTodo";
 import TodoList from "../components/TodoList";
+import { supabase } from "@/lib/supabase";
+import { useRouter } from "next/navigation";
 
 const Todo = () => {
-  const [name, setName] = useState<string | null>(null);
-
+  const [email, setEmail] = useState<string | null>(null);
+  const router = useRouter();
   useEffect(() => {
-    const storedName = localStorage.getItem("username");
-    if (storedName) {
-      setName(storedName);
-    }
+    const fetchUser = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (error) {
+        console.log("error in get session", error.message);
+        return;
+      }
+      setEmail(data.session?.user.email ?? null);
+    };
+    fetchUser();
   }, []);
+
+  const handlegotoLoginPage = () => {
+    router.push("/login");
+  };
+
   return (
     <div className="border bg-gray-50 h-screen flex flex-col p-4 items-center justify-center">
-      <div className="flex flex-col w-full h-screen mt-4 gap-2">
-        <h1 className="w-full flex justify-center items-center text-gray-700 font-semibold text-2xl mb-2 gap-2">
-          <span className="text-red-500 font-semibold">
-            {name ? name?.charAt(0).toUpperCase() + name?.slice(1) : ""}
-          </span>
-          <span>Todo App :)</span>
-        </h1>
-        <Container>
-          <div>
-            <AddTodo />
-          </div>
-          <div>
-            <TodoList />
-          </div>
-        </Container>
-      </div>
+      {email ? (
+        <div className="flex w-full bg-gray-500 p-4 rounded-lg items-center justify-between ">
+          <p className="font-semibold text-white text-xl">{email}</p>
+          <button
+            onClick={async () => {
+              await supabase.auth.signOut();
+              router.push("/");
+            }}
+            className="text-white bg-red-500 px-4 py-1 rounded-md"
+          >
+            Logout
+          </button>
+        </div>
+      ) : (
+        <div className="flex w-full bg-gray-500 p-4 rounded-lg items-center justify-between ">
+          <p className="font-semibold text-white text-xl text-center">
+            You must login first!
+          </p>
+          <button
+            onClick={handlegotoLoginPage}
+            className="text-white bg-red-500 px-4 py-1 rounded-md"
+          >
+            Login
+          </button>
+        </div>
+      )}
+      {email && (
+        <div className="flex flex-col w-full h-screen mt-4 ">
+          <h1 className="w-full flex justify-center items-center text-gray-700 font-semibold text-2xl mb-2 gap-2">
+            <span>Todo App :)</span>
+          </h1>
+          <Container>
+            <div>
+              <AddTodo />
+            </div>
+            <div>
+              <TodoList />
+            </div>
+          </Container>
+        </div>
+      )}
     </div>
   );
 };

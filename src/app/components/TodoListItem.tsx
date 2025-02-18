@@ -1,6 +1,7 @@
 "use client";
 
 import { ITodo, useTodoContext } from "@/context/TodoListContext";
+import { supabase } from "@/lib/supabase";
 import { useState, useRef, useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
@@ -13,33 +14,62 @@ const TodoListItem = () => {
   const { todos, dispatch } = todoContext || { todos: [], dispatch: () => {} };
 
   useEffect(() => {
-    if (!todoContext) return;
+    const fetchTodo = async () => {
+      const { data: userSession } = await supabase.auth.getSession();
+      if (!userSession.session?.user) return;
 
-    const savedTodos = localStorage.getItem("todos");
-    if (savedTodos) {
-      dispatch({ type: "LOAD_TODOS", payload: JSON.parse(savedTodos) });
-    }
-  }, []);
+      const userId = userSession.session.user.id;
+      const { data, error } = await supabase
+        .from("todos")
+        .select("*")
+        .eq("user_Id", userId);
+      if (error) {
+        console.error("Error fetching todos from supabase", error.message);
+        return;
+      }
+      if (data) {
+        dispatch({ type: "LOAD_TODOS", payload: data });
+      }
+    };
+    fetchTodo();
+  }, [dispatch]);
 
   useEffect(() => {
-    if (!todoContext) return;
-
     localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos, todoContext]);
+  }, [todos]);
 
-  // فوکوس روی اینپوت هنگام باز شدن مدال
+  // Focus edit input on modal opening
   useEffect(() => {
     if (editingTodo && inputRef.current) {
       inputRef.current.focus();
     }
   }, [editingTodo]);
 
-  const handleToggleTodo = (id: string) => {
+  const handleToggleTodo = async (id: string, currentStatus: boolean) => {
+    const { error } = await supabase
+      .from("todos")
+      .update({ complete: !currentStatus })
+      .eq("id", id);
+    if (error) {
+      console.error("Error updating todo status", error.message);
+      return;
+    }
+
     dispatch({ type: "TOGGLE_TODO", payload: id });
   };
 
-  const handleRemoveTodo = (id: string) => {
+  const handleRemoveTodo = async (id: string) => {
+    const { error } = await supabase.from("todos").delete().eq("id", id);
+    if (error) {
+      console.error("Error deleting todos", error.message);
+      return;
+    }
     dispatch({ type: "REMOVE_TODO", payload: id });
+
+    localStorage.setItem(
+      "todos",
+      JSON.stringify(todos.filter((todo) => todo.id !== id))
+    );
   };
 
   const handleEditTodoOpen = (todo: ITodo) => {
@@ -50,13 +80,30 @@ const TodoListItem = () => {
     setEditingTodo(null);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const newTitle = inputRef.current?.value.trim() ?? "";
+
     if (editingTodo && newTitle !== "") {
+      const { error } = await supabase
+        .from("todos")
+        .update({ title: newTitle })
+        .eq("id", editingTodo.id);
+
+      if (error) {
+        console.error("Error updating todo", error.message);
+        return;
+      }
+
       dispatch({
         type: "EDIT_TODO",
         payload: { id: editingTodo.id, title: newTitle },
       });
+
+      const updatedTodos = todos.map((todo) =>
+        todo.id === editingTodo.id ? { ...todo, title: newTitle } : todo
+      );
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+
       handleEditClose();
     }
   };
@@ -73,7 +120,7 @@ const TodoListItem = () => {
               <input
                 type="checkbox"
                 checked={todo.complete}
-                onChange={() => handleToggleTodo(todo.id)}
+                onChange={() => handleToggleTodo(todo.id, todo.complete)}
                 className="cursor-pointer"
               />
               <p
