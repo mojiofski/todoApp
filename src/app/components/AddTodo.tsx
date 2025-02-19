@@ -5,8 +5,11 @@ import { useTodoContext } from "@/context/TodoListContext";
 import { IoMdAdd } from "react-icons/io";
 import { supabase } from "@/lib/supabase";
 
+const categories = ["Work", "Personal", "Shopping", "Exercise"];
+
 const AddTodo = () => {
   const [todoInput, setTodoInput] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const todoContext = useTodoContext();
   if (!todoContext) return null;
   const { dispatch } = todoContext;
@@ -17,7 +20,9 @@ const AddTodo = () => {
 
     const { data, error } = await supabase
       .from("todos")
-      .insert([{ title: todoInput, complete: false }])
+      .insert([
+        { title: todoInput, complete: false, category: selectedCategory },
+      ])
       .select();
 
     if (error) {
@@ -28,19 +33,18 @@ const AddTodo = () => {
     if (data && data.length > 0) {
       dispatch({
         type: "ADD_TODO",
-        payload: data[0], // ✅ todo را از دیتابیس می‌گیریم، شامل `id`
+        payload: data[0],
       });
     }
 
     setTodoInput("");
   };
 
-  
   return (
-    <div>
+    <div className="rounded-lg shadow-lg w-full">
       <form
         onSubmit={handleSubmit}
-        className="flex gap-2 items-center justify-center bg-gray-300 px-6 py-4 rounded-lg shadow-md w-full  "
+        className="flex gap-2 items-center justify-center px-4 py-4"
       >
         <input
           type="text"
@@ -50,6 +54,17 @@ const AddTodo = () => {
           placeholder="Enter Here..."
           className="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="border px-3 py-2 rounded-lg bg-white text-gray-700"
+        >
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
         <button
           type="submit"
           disabled={!todoInput.trim()}
