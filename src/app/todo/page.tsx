@@ -60,13 +60,12 @@ const Todo = () => {
         </div>
       )}
       {email && (
-        <div className="flex flex-col w-full h-screen ">
+        <div className="flex flex-col w-full h-[100vh] ">
           <Container>
             <div>
               <AddTodo />
             </div>
-            <div className="flex flex-col min-h-[300px] max-h-screen ">
-              
+            <div className="flex flex-col min-h-[300px]">
               <TodoList />
             </div>
           </Container>

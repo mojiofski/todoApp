@@ -160,9 +160,9 @@ const TodoListItem = () => {
   return (
     <>
       {/* Filter Todo Section */}
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center p-2 mt-2 gap-2">
-          <p className="text-gray-900 font-semibold">Filtred By Categories </p>
+      <div className="flex flex-col gap-4 p-6">
+        <div className="flex items-center justify-center gap-2 w-full">
+          <p className="text-gray-900 font-semibold">Filtred By Categories</p>
           <select
             value={filtredCategories}
             onChange={(e) => setFiltredCategories(e.target.value)}
@@ -176,7 +176,7 @@ const TodoListItem = () => {
             ))}
           </select>
         </div>
-        <div className="flex gap-2 justify-center items-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 justify-center items-center">
           {filtredByTimes.map((item) => (
             <button
               key={item}
@@ -192,7 +192,7 @@ const TodoListItem = () => {
       </div>
 
       {/* Display of todos */}
-      <div className="overflow-y-auto flex-grow">
+      <div className="flex-grow">
         <ul className="space-y-3">
           {todos
 

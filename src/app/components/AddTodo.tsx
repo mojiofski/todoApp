@@ -49,8 +49,8 @@ const AddTodo = () => {
   };
 
   return (
-    <div className="w-full">
-      <div className="flex items-center justify-between px-6 py-4 border-b-2 border-b-red-200 rounded-md">
+    <div className="w-full p-6 border-b-2 border-b-red-200 rounded-md">
+      <div className="flex items-center justify-between ">
         <h1 className="w-full flex text-gray-700 font-semibold text-2xl">
           <span className="text-red-500 text-2xl font-semibold">
             Todo App :)
@@ -68,6 +68,9 @@ const AddTodo = () => {
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-6 w-full ">
           <div className="bg-white p-6 rounded shadow-lg max-w-xs mx-auto md:max-w-xl">
+            <h2 className="text-lg font-medium text-blue-500 pt-4 bg-red-200">
+              Add Todo
+            </h2>
             <form
               onSubmit={handleSubmit}
               className="flex gap-2 items-center justify-center px-4 py-4"
