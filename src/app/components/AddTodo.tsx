@@ -57,8 +57,9 @@ const AddTodo = () => {
         </button>
       </div>
 
+      {/* Modal Add Todo */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-6">
           <div className="bg-white p-6 rounded shadow-lg">
             <form
               onSubmit={handleSubmit}
