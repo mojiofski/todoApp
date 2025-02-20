@@ -60,7 +60,7 @@ const Todo = () => {
         </div>
       )}
       {email && (
-        <div className="flex flex-col w-full h-[100vh] ">
+        <div className="flex flex-col w-full h-[100vh] mt-5">
           <Container>
             <div>
               <AddTodo />
