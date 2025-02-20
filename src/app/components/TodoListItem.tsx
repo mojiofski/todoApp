@@ -192,68 +192,77 @@ const TodoListItem = () => {
       </div>
 
       {/* Display of todos */}
-      <ul className="space-y-3 ">
-        {todos
+      <div className="overflow-y-auto flex-grow">
+        <ul className="space-y-3 ">
+          {todos
 
-          .filter(
-            (todo) =>
-              filtredCategories === "All" || todo.category === filtredCategories
-          )
-          .filter((todo) => filtredByTime(todo))
-          .map((todo: ITodo) => (
-            <li
-              key={todo.id}
-              className="flex justify-between items-center p-3 border rounded-md bg-white "
-            >
-              <div className="flex items-center gap-2">
-                <div className="flex flex-col">
-                  <div className="flex items-center justify-between gap-2">
-                    <span>
-                      {categoryIcon[todo.category as keyof typeof categoryIcon]}
-                    </span>
-                    <span className="text-gray-400 text-xs">
-                      {new Date(todo.created_at).toLocaleDateString("en-US", {
-                        weekday: "long",
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <input
-                      type="checkbox"
-                      checked={todo.complete}
-                      onChange={() => handleToggleTodo(todo.id, todo.complete)}
-                      className="cursor-pointer"
-                    />
-                    <p
-                      className={`font-semibold text-md text-gray-900 ${
-                        todo.complete ? "line-through text-gray-500" : ""
-                      }`}
-                    >
-                      {todo.title}
-                    </p>
+            .filter(
+              (todo) =>
+                filtredCategories === "All" ||
+                todo.category === filtredCategories
+            )
+            .filter((todo) => filtredByTime(todo))
+            .map((todo: ITodo) => (
+              <li
+                key={todo.id}
+                className="flex justify-between items-center p-3 border rounded-md bg-white "
+              >
+                <div className="flex items-center gap-2">
+                  <div className="flex flex-col">
+                    <div className="flex items-center justify-between gap-2">
+                      <span>
+                        {
+                          categoryIcon[
+                            todo.category as keyof typeof categoryIcon
+                          ]
+                        }
+                      </span>
+                      <span className="text-gray-400 text-xs">
+                        {new Date(todo.created_at).toLocaleDateString("en-US", {
+                          weekday: "long",
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <input
+                        type="checkbox"
+                        checked={todo.complete}
+                        onChange={() =>
+                          handleToggleTodo(todo.id, todo.complete)
+                        }
+                        className="cursor-pointer"
+                      />
+                      <p
+                        className={`font-semibold text-md text-gray-900 ${
+                          todo.complete ? "line-through text-gray-500" : ""
+                        }`}
+                      >
+                        {todo.title}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => handleEditTodoOpen(todo)}
-                  className="px-3 py-2 bg-white text-yellow-500 border rounded-md hover:bg-yellow-500 hover:text-white transition"
-                >
-                  <FaEdit />
-                </button>
-                <button
-                  onClick={() => handleRemoveTodo(todo.id)}
-                  className="px-3 py-2 bg-white text-red-500 border rounded-md hover:bg-red-500 hover:text-white transition"
-                >
-                  <FaTrashAlt />
-                </button>
-              </div>
-            </li>
-          ))}
-      </ul>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleEditTodoOpen(todo)}
+                    className="px-3 py-2 bg-white text-yellow-500 border rounded-md hover:bg-yellow-500 hover:text-white transition"
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    onClick={() => handleRemoveTodo(todo.id)}
+                    className="px-3 py-2 bg-white text-red-500 border rounded-md hover:bg-red-500 hover:text-white transition"
+                  >
+                    <FaTrashAlt />
+                  </button>
+                </div>
+              </li>
+            ))}
+        </ul>
+      </div>
 
       {/* Modal for editing form */}
       {editingTodo && (
