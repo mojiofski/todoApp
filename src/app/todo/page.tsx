@@ -61,11 +61,7 @@ const Todo = () => {
       )}
       {email && (
         <div className="flex flex-col w-full h-screen mt-4 ">
-          <h1 className="w-full flex justify-center items-center text-gray-700 font-semibold text-2xl mb-2 gap-2">
-            <span className="text-red-500 text-2xl font-semibold">
-              Todo App :)
-            </span>
-          </h1>
+         
           <Container>
             <div>
               <AddTodo />
