@@ -8,6 +8,7 @@ import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { IoMdLogOut } from "react-icons/io";
 import Link from "next/link";
+import ThemeSwitcher from "../components/ThemeSwitcher";
 
 const Todo = () => {
   const [email, setEmail] = useState<string | null>(null);
@@ -29,22 +30,27 @@ const Todo = () => {
   };
 
   return (
-    <div className="border h-screen flex flex-col items-center justify-center md:gap-20">
+    <div className="w-full h-screen flex flex-col items-center justify-center md:gap-20 ">
       {email ? (
-        <div className="flex w-full bg-gray-500 p-4 items-center justify-between rounded-md sticky top-0 right-0 left-0 z-50">
+        <div className="flex w-full p-4 items-center justify-between rounded-md shadow-lg sticky top-0 right-0 left-0 z-50 bg-background text-foreground">
           <Link href={"/profile"}>
-            <p className="font-semibold text-white text-xl">{email}</p>
+            <p className="font-semibold text-xl">{email}</p>
           </Link>
 
-          <button
-            onClick={async () => {
-              await supabase.auth.signOut();
-              router.push("/");
-            }}
-            className="text-white bg-red-500 px-2 py-2 rounded-full text-lg"
-          >
-            <IoMdLogOut />
-          </button>
+          <div className="flex gap-1">
+            <div>
+              <ThemeSwitcher />
+            </div>
+            <button
+              onClick={async () => {
+                await supabase.auth.signOut();
+                router.push("/");
+              }}
+              className="text-white bg-red-500 px-2 py-2 rounded-full text-lg"
+            >
+              <IoMdLogOut />
+            </button>
+          </div>
         </div>
       ) : (
         <div className="flex w-full bg-gray-500 p-4 rounded-lg items-center justify-between ">
@@ -65,7 +71,7 @@ const Todo = () => {
             <div>
               <AddTodo />
             </div>
-            <div className="flex flex-col min-h-[300px]">
+            <div className="flex flex-col">
               <TodoList />
             </div>
           </Container>

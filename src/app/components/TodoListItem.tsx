@@ -267,8 +267,8 @@ const TodoListItem = () => {
       {/* Modal for editing form */}
       {editingTodo && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="bg-white p-6 rounded shadow-lg max-w-xs mx-auto md:max-w-lg">
-            <h2 className="text-lg font-medium mb-4 text-purple-600">
+          <div className="bg-white p-6 rounded shadow-lg w-full max-w-xs mx-auto md:max-w-lg">
+            <h2 className="text-lg font-medium mb-4 text-red-500">
               Edit Todo
             </h2>
             <input

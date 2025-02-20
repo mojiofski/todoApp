@@ -2,14 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-color: #edeef0;
+:root {
+    --background: white;
+    --foreground: black;
 }
 
-.scrollerbar-hide::-webkit-scrollbar {
-    display: none;
+.dark {
+    --background: #111827;
+    --foreground: #f9fafb;
 }
 
-.scrollerbar-hide {
-    scrollbar-width: none;
-}

@@ -67,15 +67,13 @@ const AddTodo = () => {
       {/* Modal Add Todo */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-6 w-full ">
-          <div className="bg-white p-6 rounded shadow-lg max-w-xs mx-auto md:max-w-xl">
-            <h2 className="text-lg font-medium text-blue-500 pt-4 bg-red-200">
-              Add Todo
-            </h2>
+          <div className="bg-white p-6 rounded shadow-lg w-full max-w-xs mx-auto md:max-w-lg ">
+            <h2 className="text-lg font-medium text-blue-500 pt-4">Add Todo</h2>
             <form
               onSubmit={handleSubmit}
-              className="flex gap-2 items-center justify-center px-4 py-4"
+              className="flex gap-2 items-center justify-center px-4 py-4 w-full"
             >
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 w-full">
                 <div className="flex justify-between gap-2 ">
                   <input
                     type="text"
