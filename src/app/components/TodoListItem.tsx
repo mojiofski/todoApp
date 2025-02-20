@@ -182,7 +182,7 @@ const TodoListItem = () => {
               key={item}
               onClick={() => setTimeFilter(item)}
               className={`px-2 py-1 rounded-md text-white transition ${
-                timeFilter === item ? "bg-gray-600" : "bg-red-500"
+                timeFilter === item ? "bg-blue-600" : "bg-red-500"
               }`}
             >
               {item}
@@ -258,7 +258,7 @@ const TodoListItem = () => {
       {/* Modal for editing form */}
       {editingTodo && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="bg-white p-6 rounded shadow-lg">
+          <div className="bg-white p-6 rounded shadow-lg max-w-sm mx-auto">
             <h2 className="text-lg font-medium mb-4 text-purple-600">
               Edit Todo
             </h2>
@@ -282,7 +282,7 @@ const TodoListItem = () => {
             <div className="flex justify-end space-x-3">
               <button
                 onClick={handleEditClose}
-                className="bg-gray-500 text-white px-4 py-2 rounded"
+                className="bg-red-500 text-white px-4 py-2 rounded"
               >
                 Cancel
               </button>

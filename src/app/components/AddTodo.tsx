@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTodoContext } from "@/context/TodoListContext";
 import { supabase } from "@/lib/supabase";
 
@@ -10,6 +10,13 @@ const AddTodo = () => {
   const [todoInput, setTodoInput] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  // focus add input on modal open
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [isModalOpen]);
+
   const todoContext = useTodoContext();
   if (!todoContext) return null;
   const { dispatch } = todoContext;
@@ -43,7 +50,7 @@ const AddTodo = () => {
 
   return (
     <div className="w-full">
-      <div className="flex items-center justify-between px-10 py-4 border-b-2 border-b-red-200 rounded-md">
+      <div className="flex items-center justify-between px-6 py-4 border-b-2 border-b-red-200 rounded-md">
         <h1 className="w-full flex text-gray-700 font-semibold text-2xl">
           <span className="text-red-500 text-2xl font-semibold">
             Todo App :)
@@ -59,8 +66,8 @@ const AddTodo = () => {
 
       {/* Modal Add Todo */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-6">
-          <div className="bg-white p-6 rounded shadow-lg">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-6 w-full ">
+          <div className="bg-white p-6 rounded shadow-lg max-w-sm mx-auto">
             <form
               onSubmit={handleSubmit}
               className="flex gap-2 items-center justify-center px-4 py-4"
@@ -69,6 +76,7 @@ const AddTodo = () => {
                 <div className="flex justify-between gap-2 ">
                   <input
                     type="text"
+                    ref={inputRef}
                     name="todoName"
                     value={todoInput}
                     onChange={(e) => setTodoInput(e.target.value)}
@@ -90,6 +98,12 @@ const AddTodo = () => {
 
                 <div className="flex w-full items-center justify-end gap-2">
                   <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="bg-red-500 text-white px-4 py-2 rounded"
+                  >
+                    Cancel
+                  </button>
+                  <button
                     type="submit"
                     disabled={!todoInput.trim()}
                     className={`text-white px-4 py-2 rounded ${
@@ -99,12 +113,6 @@ const AddTodo = () => {
                     } transition`}
                   >
                     Add
-                  </button>
-                  <button
-                    onClick={() => setIsModalOpen(false)}
-                    className="bg-gray-500 text-white px-4 py-2 rounded"
-                  >
-                    Cancel
                   </button>
                 </div>
               </div>
