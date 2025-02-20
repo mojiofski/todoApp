@@ -67,7 +67,7 @@ const AddTodo = () => {
       {/* Modal Add Todo */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-6 w-full ">
-          <div className="bg-white p-6 rounded shadow-lg max-w-sm mx-auto">
+          <div className="bg-white p-6 rounded shadow-lg max-w-xs mx-auto md:max-w-lg">
             <form
               onSubmit={handleSubmit}
               className="flex gap-2 items-center justify-center px-4 py-4"
