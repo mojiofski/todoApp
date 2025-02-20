@@ -65,7 +65,7 @@ const Todo = () => {
             <div>
               <AddTodo />
             </div>
-            <div className="flex flex-col min-h-[300px]">
+            <div className="flex flex-col min-h-[300px] max-h-screen ">
               
               <TodoList />
             </div>

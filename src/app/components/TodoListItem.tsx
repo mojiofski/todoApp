@@ -193,7 +193,7 @@ const TodoListItem = () => {
 
       {/* Display of todos */}
       <div className="overflow-y-auto flex-grow">
-        <ul className="space-y-3 ">
+        <ul className="space-y-3">
           {todos
 
             .filter(
