@@ -65,7 +65,10 @@ const Todo = () => {
             <div>
               <AddTodo />
             </div>
-            <div className="min-h-[300px] max-h-[500px] overflow-y-auto scrollerbar-hide">
+            <div className="flex flex-col min-h-[300px] max-h-[500px] overflow-hidden">
+              <div>
+                
+              </div>
               <TodoList />
             </div>
           </Container>
