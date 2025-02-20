@@ -3,7 +3,7 @@ import TodoListItem from "./TodoListItem";
 
 const TodoList = () => {
   return (
-    <div className="">
+    <div className="mt-6 overflow-y-auto flex-grow">
       <TodoListItem />
     </div>
   );
