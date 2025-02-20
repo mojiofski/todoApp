@@ -5,3 +5,11 @@
 body {
     background-color: #edeef0;
 }
+
+.scrollerbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollerbar-hide {
+    scrollbar-width: none;
+}

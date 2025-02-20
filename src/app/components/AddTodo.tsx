@@ -67,7 +67,7 @@ const AddTodo = () => {
       {/* Modal Add Todo */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-6 w-full ">
-          <div className="bg-white p-6 rounded shadow-lg max-w-xs mx-auto md:max-w-lg">
+          <div className="bg-white p-6 rounded shadow-lg max-w-xs mx-auto md:max-w-xl">
             <form
               onSubmit={handleSubmit}
               className="flex gap-2 items-center justify-center px-4 py-4"
@@ -83,6 +83,9 @@ const AddTodo = () => {
                     placeholder="Enter Here..."
                     className="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                </div>
+                <div className="flex gap-2 items-center justify-center">
+                  <p>Category</p>
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}

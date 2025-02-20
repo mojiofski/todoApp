@@ -29,7 +29,7 @@ const Todo = () => {
   };
 
   return (
-    <div className="border h-screen flex flex-col items-center justify-center gap-20">
+    <div className="border h-screen flex flex-col items-center justify-center gap-5">
       {email ? (
         <div className="flex w-full bg-gray-500 p-4 items-center justify-between rounded-md sticky top-0 right-0 left-0 z-50">
           <Link href={"/profile"}>
@@ -60,7 +60,7 @@ const Todo = () => {
         </div>
       )}
       {email && (
-        <div className="flex flex-col w-full h-screen ">
+        <div className="flex flex-col w-full h-screen min-h-[300px] max-h-[500px] overflow-y-auto scrollerbar-hide">
           <Container>
             <div>
               <AddTodo />
