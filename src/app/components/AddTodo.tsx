@@ -67,7 +67,7 @@ const AddTodo = () => {
         </h1>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex justify-center w-full bg-gray-700 text-white rounded-md px-2 py-1 max-w-[100px] mx-auto"
+          className="flex justify-center w-full bg-blue-500 text-white rounded-md px-2 py-1 max-w-[100px] mx-auto"
         >
           Add Task
         </button>
@@ -75,7 +75,7 @@ const AddTodo = () => {
 
       {/* Modal Add Todo */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center  bg-gray-800 bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded shadow-lg w-full max-w-xs mx-auto md:max-w-lg ">
             <h2 className="text-lg font-medium mb-4 text-blue-500">Add Todo</h2>
             <form onSubmit={handleSubmit} className="">
@@ -89,7 +89,7 @@ const AddTodo = () => {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="border px-2 rounded-lg py-1"
+                className="border px-2 rounded-lg py-1 mb-4"
               >
                 {categories.map((cat) => (
                   <option key={cat} value={cat}>

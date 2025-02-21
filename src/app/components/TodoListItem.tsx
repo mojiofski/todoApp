@@ -355,7 +355,7 @@ const TodoListItem = () => {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="border px-2 rounded-lg py-1"
+              className="border px-2 rounded-lg py-1 mb-4"
             >
               {categories.map((cat) => (
                 <option key={cat} value={cat}>
