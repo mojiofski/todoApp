@@ -235,7 +235,7 @@ const TodoListItem = () => {
         <div className="flex w-full justify-center items-center">
           <form className="w-full relative">
             <div className="absolute inset-y-0 left-2 flex items-center">
-              <FaSearch className="text-gray-500 text-lg" aria-label="Search" />
+              <FaSearch className="text-gray-500 text-md" aria-label="Search" />
             </div>
             <input
               type="text"
