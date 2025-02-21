@@ -6,30 +6,34 @@ import { useState, useRef, useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import { MdOutlineWorkOutline } from "react-icons/md";
-import { BsPersonFillSlash } from "react-icons/bs";
+import { IoPersonSharp } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaDumbbell } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
-import { IoGameController } from "react-icons/io5";
-import { GiCookingPot } from "react-icons/gi";
+import { MdLiveTv } from "react-icons/md";
+import { PiCookingPotFill } from "react-icons/pi";
 import { FaBookOpen } from "react-icons/fa";
 import { FaHammer } from "react-icons/fa";
+import { ImAirplane } from "react-icons/im";
+import { IoGameController } from "react-icons/io5";
+import { MdSports } from "react-icons/md";
 
 const categoryIcon = {
   Work: (
     <MdOutlineWorkOutline className="text-blue-500 font-semibold text-xl" />
   ),
-  Personal: (
-    <BsPersonFillSlash className="text-red-500 font-semibold text-xl" />
-  ),
+  Personal: <IoPersonSharp className="text-red-500 font-semibold text-xl" />,
   Shopping: <FaCartShopping className="text-green-500 font-semibold text-xl" />,
   Exercise: <FaDumbbell className="text-purple-500 font-semibold text-xl" />,
-  Entertainment: (
-    <IoGameController className="text-pink-500 font-semibold text-xl" />
+  Entertainment: <MdLiveTv className="text-gray-600 font-semibold text-xl" />,
+  Cooking: (
+    <PiCookingPotFill className="text-orange-600 font-semibold text-xl" />
   ),
-  Cooking: <GiCookingPot className="text-slate-800 font-semibold text-xl" />,
   Learning: <FaBookOpen className="text-slate-500 font-semibold text-xl" />,
   Repairs: <FaHammer className="text-slate-950 font-semibold text-xl" />,
+  Travel: <ImAirplane className="text-sky-500 font-semibold text-xl" />,
+  Gaming: <IoGameController className="text-pink-500 font-semibold text-xl" />,
+  Sport: <MdSports className="text-yellow-800 font-semibold text-xl" />,
 };
 const categories = [
   "Work",
@@ -40,6 +44,9 @@ const categories = [
   "Cooking",
   "Learning",
   "Repairs",
+  "Travel",
+  "Gaming",
+  "Sport",
 ];
 
 const filtredByTimes = ["Last Month", "Last Week", "Yesterday", "Today"];

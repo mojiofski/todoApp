@@ -13,6 +13,9 @@ const categories = [
   "Cooking",
   "Learning",
   "Repairs",
+  "Travel",
+  "Gaming",
+  "Sport"
 ];
 const AddTodo = () => {
   const [todoInput, setTodoInput] = useState("");
