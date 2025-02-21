@@ -264,9 +264,9 @@ const TodoListItem = () => {
                 key={todo.id}
                 className="flex justify-between items-center p-3 border rounded-md bg-white "
               >
-                <div className="flex items-center gap-2">
-                  <div className="flex flex-col">
-                    <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2  w-full">
+                  <div className="flex flex-col w-full ">
+                    <div className="flex items-center justify-center w-max gap-2">
                       <span>
                         {
                           categoryIcon[
@@ -283,7 +283,7 @@ const TodoListItem = () => {
                         })}
                       </span>
                     </div>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 flex-1 w-full">
                       <input
                         type="checkbox"
                         checked={todo.complete}
