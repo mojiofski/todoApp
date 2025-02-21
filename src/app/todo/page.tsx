@@ -30,7 +30,7 @@ const Todo = () => {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-center md:gap-20 ">
+    <div className="w-full h-screen flex flex-col items-center justify-center md:gap-20  ">
       {email ? (
         <div className="flex w-full p-4 items-center justify-between rounded-md shadow-lg sticky top-0 right-0 left-0 z-50 bg-background text-foreground">
           <Link href={"/profile"}>
@@ -53,7 +53,7 @@ const Todo = () => {
           </div>
         </div>
       ) : (
-        <div className="flex w-full bg-gray-500 p-4 rounded-lg items-center justify-between ">
+        <div className="flex w-full p-4 rounded-lg items-center justify-between text-foregroundContainer bg-background">
           <p className="font-semibold text-white text-xl text-center">
             You must login first!
           </p>
@@ -66,7 +66,7 @@ const Todo = () => {
         </div>
       )}
       {email && (
-        <div className="flex flex-col w-full h-[100vh] mt-5">
+        <div className="flex flex-col w-full h-[100vh] mt-5 ">
           <Container>
             <div>
               <AddTodo />

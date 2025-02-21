@@ -50,10 +50,10 @@ const AddTodo = () => {
   };
 
   return (
-    <div className="w-full p-6 border-b-2 border-b-red-200 rounded-md">
-      <div className="flex items-center justify-between ">
-        <h1 className="w-full flex text-gray-700 font-semibold text-2xl">
-          <span className="text-red-500 text-2xl font-semibold">
+    <div className="w-full p-6 rounded-md">
+      <div className="flex items-center justify-between py-2 ">
+        <h1 className="w-full flex items-center font-semibold text-2xl ">
+          <span className=" text-2xl font-semibold text-foreground">
             Todo App :)
           </span>
         </h1>

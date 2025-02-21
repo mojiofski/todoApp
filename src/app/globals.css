@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
     --background: white;
     --foreground: black;
@@ -9,6 +10,7 @@
 
 .dark {
     --background: #111827;
+    --backgroundContainer: #1b1b1b;
     --foreground: #f9fafb;
+    --foregroundContainer: #ffffff;
 }
-

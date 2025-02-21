@@ -67,7 +67,7 @@ const Home = () => {
       </h1>
       <Container>
         <div className="flex flex-col gap-4 justify-center items-center">
-          <h1 className="text-lg font-semibold text-gray-600">
+          <h1 className="text-lg font-semibold text-foreground">
             Please Sign in to use this app feature
           </h1>
           <button

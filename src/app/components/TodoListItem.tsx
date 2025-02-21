@@ -203,7 +203,7 @@ const TodoListItem = () => {
       <div className="flex flex-col gap-4 px-6 py-3 justify-between">
         {/* Category Filter */}
         <div className="flex items-center justify-center gap-2 w-full">
-          <p className="text-gray-900 font-semibold">Filtred By Categories</p>
+          <p className="font-semibold text-foreground">Filtred By Categories</p>
           <select
             value={filtredCategories}
             onChange={(e) => setFiltredCategories(e.target.value)}
