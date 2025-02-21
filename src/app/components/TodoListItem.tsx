@@ -17,6 +17,7 @@ import { FaHammer } from "react-icons/fa";
 import { ImAirplane } from "react-icons/im";
 import { IoGameController } from "react-icons/io5";
 import { MdSports } from "react-icons/md";
+import { FiMusic } from "react-icons/fi";
 
 const categoryIcon = {
   Work: (
@@ -34,7 +35,9 @@ const categoryIcon = {
   Travel: <ImAirplane className="text-sky-500 font-semibold text-xl" />,
   Gaming: <IoGameController className="text-pink-500 font-semibold text-xl" />,
   Sport: <MdSports className="text-yellow-800 font-semibold text-xl" />,
+  Music: <FiMusic className="text-blue-800 font-semibold text-xl" />,
 };
+
 const categories = [
   "Work",
   "Personal",
@@ -47,6 +50,7 @@ const categories = [
   "Travel",
   "Gaming",
   "Sport",
+  "Music",
 ];
 
 const filtredByTimes = ["Last Month", "Last Week", "Yesterday", "Today"];
@@ -62,6 +66,7 @@ const TodoListItem = () => {
   const todoContext = useTodoContext();
   const { todos, dispatch } = todoContext || { todos: [], dispatch: () => {} };
 
+  // Fetch Todos from database and dispatch to context
   useEffect(() => {
     const fetchTodo = async () => {
       const { data: userSession } = await supabase.auth.getSession();
@@ -83,6 +88,7 @@ const TodoListItem = () => {
     fetchTodo();
   }, [dispatch]);
 
+  // saved todos on clients local storage
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
@@ -94,6 +100,7 @@ const TodoListItem = () => {
     }
   }, [editingTodo]);
 
+  // Update Toggle todo in database and dispatch to context
   const handleToggleTodo = async (id: string, currentStatus: boolean) => {
     const { error } = await supabase
       .from("todos")
@@ -107,6 +114,7 @@ const TodoListItem = () => {
     dispatch({ type: "TOGGLE_TODO", payload: id });
   };
 
+  // Remove todo from database and dispatch to context and set new todos in local storage
   const handleRemoveTodo = async (id: string) => {
     const { error } = await supabase.from("todos").delete().eq("id", id);
     if (error) {
@@ -129,6 +137,7 @@ const TodoListItem = () => {
     setEditingTodo(null);
   };
 
+  // Saving updated todo in database and dispatch in context and update amount of todos in loacl storage
   const handleSave = async () => {
     const newTitle = inputRef.current?.value.trim() ?? "";
 
@@ -161,6 +170,7 @@ const TodoListItem = () => {
     }
   };
 
+  // Filtring todos by time
   const filtredByTime = (todo: ITodo) => {
     const createdAt = new Date(todo.created_at);
     const now = new Date();
@@ -185,6 +195,7 @@ const TodoListItem = () => {
     return true;
   };
 
+  // fetching todo from database by searching client
   const handleChangeSearchInput = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {

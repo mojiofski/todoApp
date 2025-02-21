@@ -15,7 +15,8 @@ const categories = [
   "Repairs",
   "Travel",
   "Gaming",
-  "Sport"
+  "Sport",
+  "Music",
 ];
 const AddTodo = () => {
   const [todoInput, setTodoInput] = useState("");
@@ -32,11 +33,11 @@ const AddTodo = () => {
   if (!todoContext) return null;
   const { dispatch } = todoContext;
 
+  // Adding todo to database and dispatch to context
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!todoInput.trim()) return;
 
-    
     const { data, error } = await supabase
       .from("todos")
       .insert([
@@ -62,6 +63,7 @@ const AddTodo = () => {
 
   return (
     <div className="w-full p-6 rounded-md">
+      {/* Add todo Section */}
       <div className="flex items-center justify-between py-2 ">
         <h1 className="w-full flex items-center font-semibold text-2xl ">
           <span className=" text-2xl font-semibold text-foreground">
