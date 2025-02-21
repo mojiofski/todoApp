@@ -4,8 +4,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTodoContext } from "@/context/TodoListContext";
 import { supabase } from "@/lib/supabase";
 
-const categories = ["Work", "Personal", "Shopping", "Exercise"];
-
+const categories = [
+  "Work",
+  "Personal",
+  "Shopping",
+  "Exercise",
+  "Entertainment",
+  "Cooking",
+  "Learning",
+  "Repairs",
+];
 const AddTodo = () => {
   const [todoInput, setTodoInput] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);

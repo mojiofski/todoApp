@@ -10,6 +10,10 @@ import { BsPersonFillSlash } from "react-icons/bs";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaDumbbell } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
+import { IoGameController } from "react-icons/io5";
+import { GiCookingPot } from "react-icons/gi";
+import { FaBookOpen } from "react-icons/fa";
+import { FaHammer } from "react-icons/fa";
 
 const categoryIcon = {
   Work: (
@@ -20,8 +24,23 @@ const categoryIcon = {
   ),
   Shopping: <FaCartShopping className="text-green-500 font-semibold text-xl" />,
   Exercise: <FaDumbbell className="text-purple-500 font-semibold text-xl" />,
+  Entertainment: (
+    <IoGameController className="text-pink-500 font-semibold text-xl" />
+  ),
+  Cooking: <GiCookingPot className="text-slate-800 font-semibold text-xl" />,
+  Learning: <FaBookOpen className="text-slate-500 font-semibold text-xl" />,
+  Repairs: <FaHammer className="text-slate-950 font-semibold text-xl" />,
 };
-const categories = ["Work", "Personal", "Shopping", "Exercise"];
+const categories = [
+  "Work",
+  "Personal",
+  "Shopping",
+  "Exercise",
+  "Entertainment",
+  "Cooking",
+  "Learning",
+  "Repairs",
+];
 
 const filtredByTimes = ["Last Month", "Last Week", "Yesterday", "Today"];
 
@@ -241,7 +260,7 @@ const TodoListItem = () => {
               type="text"
               value={searchInput}
               onChange={handleChangeSearchInput}
-              className="border border-gray-300 rounded px-6 py-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded px-7 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your task name"
             />
           </form>
@@ -259,6 +278,7 @@ const TodoListItem = () => {
                 todo.category === filtredCategories
             )
             .filter((todo) => filtredByTime(todo))
+            .reverse()
             .map((todo: ITodo) => (
               <li
                 key={todo.id}
