@@ -242,7 +242,7 @@ const TodoListItem = () => {
               value={searchInput}
               onChange={handleChangeSearchInput}
               className="border border-gray-300 rounded px-8 py-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your name of task or anything"
+              placeholder="Enter your task name"
             />
           </form>
         </div>

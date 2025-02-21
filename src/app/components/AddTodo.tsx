@@ -25,6 +25,7 @@ const AddTodo = () => {
     e.preventDefault();
     if (!todoInput.trim()) return;
 
+    
     const { data, error } = await supabase
       .from("todos")
       .insert([
@@ -66,59 +67,41 @@ const AddTodo = () => {
 
       {/* Modal Add Todo */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-6 w-full ">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded shadow-lg w-full max-w-xs mx-auto md:max-w-lg ">
-            <h2 className="text-lg font-medium text-blue-500 pt-4">Add Todo</h2>
-            <form
-              onSubmit={handleSubmit}
-              className="flex gap-2 items-center justify-center px-4 py-4 w-full"
-            >
-              <div className="flex flex-col gap-4 w-full">
-                <div className="flex justify-between gap-2 ">
-                  <input
-                    type="text"
-                    ref={inputRef}
-                    name="todoName"
-                    value={todoInput}
-                    onChange={(e) => setTodoInput(e.target.value)}
-                    placeholder="Enter Here..."
-                    className="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-                <div className="flex gap-2 items-center justify-center">
-                  <p>Category</p>
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="border px-3 py-2 rounded-lg bg-white text-gray-700"
-                  >
-                    {categories.map((cat) => (
-                      <option key={cat} value={cat}>
-                        {cat}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="flex w-full items-center justify-end gap-2">
-                  <button
-                    onClick={() => setIsModalOpen(false)}
-                    className="bg-red-500 text-white px-4 py-2 rounded"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={!todoInput.trim()}
-                    className={`text-white px-4 py-2 rounded ${
-                      todoInput.trim()
-                        ? "bg-blue-500 hover:bg-blue-600"
-                        : "bg-gray-400 cursor-not-allowed"
-                    } transition`}
-                  >
-                    Add
-                  </button>
-                </div>
+            <h2 className="text-lg font-medium mb-4 text-blue-500">Add Todo</h2>
+            <form onSubmit={handleSubmit} className="">
+              <input
+                type="text"
+                ref={inputRef}
+                value={todoInput}
+                onChange={(e) => setTodoInput(e.target.value)}
+                className="border border-gray-300 rounded px-2 py-1 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="border px-2 rounded-lg py-1"
+              >
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="bg-red-500 text-white px-4 py-2 rounded"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                >
+                  Save
+                </button>
               </div>
             </form>
           </div>
