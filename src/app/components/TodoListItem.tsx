@@ -9,6 +9,7 @@ import { MdOutlineWorkOutline } from "react-icons/md";
 import { BsPersonFillSlash } from "react-icons/bs";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaDumbbell } from "react-icons/fa6";
+import { FaSearch } from "react-icons/fa";
 
 const categoryIcon = {
   Work: (
@@ -30,6 +31,7 @@ const TodoListItem = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [filtredCategories, setFiltredCategories] = useState("All");
   const [timeFilter, setTimeFilter] = useState("All");
+  const [searchInput, setSearchInput] = useState("");
 
   const todoContext = useTodoContext();
   const { todos, dispatch } = todoContext || { todos: [], dispatch: () => {} };
@@ -157,10 +159,49 @@ const TodoListItem = () => {
     return true;
   };
 
+  const handleChangeSearchInput = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const query = e.target.value.toLowerCase();
+    setSearchInput(query);
+
+    const { data: userSession } = await supabase.auth.getSession();
+    if (!userSession.session?.user) return;
+
+    const userId = userSession.session.user.id;
+
+    if (!query) {
+      const { data, error } = await supabase
+        .from("todos")
+        .select("*")
+        .eq("user_Id", userId);
+      if (error) {
+        console.error("Error fetching all todos:", error.message);
+        return;
+      }
+      dispatch({ type: "LOAD_TODOS", payload: data });
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("todos")
+      .select("*")
+      .eq("user_Id", userId)
+      .ilike("title", `%${query}%`);
+
+    if (error) {
+      console.error("Error searching todos:", error.message);
+      return;
+    }
+
+    dispatch({ type: "LOAD_TODOS", payload: data });
+  };
+
   return (
     <>
       {/* Filter Todo Section */}
-      <div className="flex flex-col gap-4 p-6">
+      <div className="flex flex-col gap-4 px-6 py-3 justify-between">
+        {/* Category Filter */}
         <div className="flex items-center justify-center gap-2 w-full">
           <p className="text-gray-900 font-semibold">Filtred By Categories</p>
           <select
@@ -176,6 +217,7 @@ const TodoListItem = () => {
             ))}
           </select>
         </div>
+        {/* Buttons Filter */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 justify-center items-center">
           {filtredByTimes.map((item) => (
             <button
@@ -188,6 +230,21 @@ const TodoListItem = () => {
               {item}
             </button>
           ))}
+        </div>
+        {/* Search Input */}
+        <div className="flex w-full justify-center items-center">
+          <form className="w-full relative">
+            <div className="absolute inset-y-0 left-2 flex items-center">
+              <FaSearch className="text-gray-500 text-lg" aria-label="Search" />
+            </div>
+            <input
+              type="text"
+              value={searchInput}
+              onChange={handleChangeSearchInput}
+              className="border border-gray-300 rounded px-8 py-1 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your name of task or anything"
+            />
+          </form>
         </div>
       </div>
 
@@ -268,9 +325,7 @@ const TodoListItem = () => {
       {editingTodo && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
           <div className="bg-white p-6 rounded shadow-lg w-full max-w-xs mx-auto md:max-w-lg">
-            <h2 className="text-lg font-medium mb-4 text-red-500">
-              Edit Todo
-            </h2>
+            <h2 className="text-lg font-medium mb-4 text-red-500">Edit Todo</h2>
             <input
               type="text"
               ref={inputRef}
