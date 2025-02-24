@@ -20,7 +20,10 @@ const categories = [
 ];
 const AddTodo = () => {
   const [todoInput, setTodoInput] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [todoDate, setTodoDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -36,12 +39,17 @@ const AddTodo = () => {
   // Adding todo to database and dispatch to context
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!todoInput.trim()) return;
+    if (!todoInput.trim() || !todoDate.trim()) return;
 
     const { data, error } = await supabase
       .from("todos")
       .insert([
-        { title: todoInput, complete: false, category: selectedCategory },
+        {
+          title: todoInput,
+          complete: false,
+          category: selectedCategory,
+          date: todoDate,
+        },
       ])
       .select();
 
@@ -81,27 +89,45 @@ const AddTodo = () => {
       {/* Modal Add Todo */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center  bg-gray-800 bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-full max-w-xs mx-auto md:max-w-lg ">
-            <h2 className="text-lg font-medium mb-4 text-blue-500">Add Todo</h2>
+          <div className="bg-background  p-6 rounded shadow-lg w-full max-w-xs mx-auto md:max-w-lg ">
+            <h2 className="text-lg font-medium mb-4 text-foreground">
+              Add Todo
+            </h2>
             <form onSubmit={handleSubmit} className="">
               <input
                 type="text"
                 ref={inputRef}
                 value={todoInput}
+                placeholder="Enter your task"
                 onChange={(e) => setTodoInput(e.target.value)}
                 className="border border-gray-300 rounded px-2 py-1 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="border px-2 rounded-lg py-1 mb-4"
-              >
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
+              <div className="flex flex-col gap-4 py-4 md:flex-row md:justify-between md:p-4">
+                <div className="flex items-center justify-around md:gap-2">
+                  <p className="font-semibold text-foreground">Category</p>
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="border px-2 rounded-lg py-1"
+                  >
+                    {categories.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex justify-around items-center md:gap-2">
+                  <p className="font-semibold text-foreground">date</p>
+                  <input
+                    type="date"
+                    value={todoDate}
+                    onChange={(e) => setTodoDate(e.target.value)}
+                    className="border px-2 py-1 rounded-lg"
+                  />
+                </div>
+              </div>
+
               <div className="flex justify-end space-x-3">
                 <button
                   onClick={() => setIsModalOpen(false)}

@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Container from "../components/Container";
-import AddTodo from "../components/AddTodo";
-import TodoList from "../components/TodoList";
+import Container from "../../components/Container";
+import AddTodo from "../../components/AddTodo";
+import TodoList from "../../components/TodoList";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { IoMdLogOut } from "react-icons/io";
 import Link from "next/link";
-import ThemeSwitcher from "../components/ThemeSwitcher";
+import ThemeSwitcher from "../../components/ThemeSwitcher";
 
 const Todo = () => {
   const [email, setEmail] = useState<string | null>(null);
@@ -53,8 +53,8 @@ const Todo = () => {
           </div>
         </div>
       ) : (
-        <div className="flex w-full p-4 rounded-lg items-center justify-between text-foregroundContainer bg-background">
-          <p className="font-semibold text-white text-xl text-center">
+        <div className="flex w-1/2 flex-col gap-4 p-4 rounded-lg shadow-lg items-center justify-between text-foregroundContainer bg-background">
+          <p className="font-semibold text-xl text-center">
             You must login first!
           </p>
           <button

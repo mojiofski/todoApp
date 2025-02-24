@@ -8,6 +8,7 @@ export interface ITodo {
   complete: boolean;
   created_at: string;
   category: string;
+  date: string;
 }
 type ActionType =
   | { type: "ADD_TODO"; payload: ITodo }

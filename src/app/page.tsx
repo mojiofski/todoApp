@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import Container from "./components/Container";
+import Container from "../components/Container";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
 

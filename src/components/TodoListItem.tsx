@@ -62,6 +62,7 @@ const TodoListItem = () => {
   const [filtredCategories, setFiltredCategories] = useState("All");
   const [timeFilter, setTimeFilter] = useState("All");
   const [searchInput, setSearchInput] = useState("");
+  const [todoDate, setTodoDate] = useState("");
 
   const todoContext = useTodoContext();
   const { todos, dispatch } = todoContext || { todos: [], dispatch: () => {} };
@@ -268,9 +269,19 @@ const TodoListItem = () => {
             </button>
           ))}
         </div>
+        {/* Filtred by Date */}
+        <div className="flex items-center justify-center gap-2 w-full">
+          <p className="text-foreground font-semibold">Filtred by Date</p>
+          <input
+            type="date"
+            value={todoDate}
+            onChange={(e) => setTodoDate(e.target.value)}
+            className="border px-2 py-1 rounded-lg"
+          />
+        </div>
         {/* Search Input */}
-        <div className="flex w-full justify-center items-center">
-          <form className="w-full relative">
+        <div className="flex w-full items-center gap-2">
+          <form className="relative w-2/3">
             <div className="absolute inset-y-0 left-2 flex items-center">
               <FaSearch className="text-gray-500 text-md" aria-label="Search" />
             </div>
@@ -282,6 +293,14 @@ const TodoListItem = () => {
               placeholder="Enter your task name"
             />
           </form>
+          <div className="flex w-1/3">
+            <button
+              onClick={() => setTodoDate("")}
+              className="px-2 py-2 rounded-md text-white transition bg-red-500 w-full"
+            >
+              All Tasks
+            </button>
+          </div>
         </div>
       </div>
 
@@ -295,6 +314,7 @@ const TodoListItem = () => {
                 filtredCategories === "All" ||
                 todo.category === filtredCategories
             )
+            .filter((todo) => !todoDate || todo.date === todoDate)
             .filter((todo) => filtredByTime(todo))
             .reverse()
             .map((todo: ITodo) => (
@@ -313,7 +333,7 @@ const TodoListItem = () => {
                         }
                       </span>
                       <span className="text-gray-400 text-xs">
-                        {new Date(todo.created_at).toLocaleDateString("en-US", {
+                        {new Date(todo.date).toLocaleDateString("en-US", {
                           weekday: "long",
                           month: "short",
                           day: "numeric",
@@ -362,25 +382,32 @@ const TodoListItem = () => {
       {/* Modal for editing form */}
       {editingTodo && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="bg-white p-6 rounded shadow-lg w-full max-w-xs mx-auto md:max-w-lg">
-            <h2 className="text-lg font-medium mb-4 text-red-500">Edit Todo</h2>
+          <div className="bg-background p-6 rounded shadow-lg w-full max-w-xs mx-auto md:max-w-lg">
+            <h2 className="text-lg text-foreground font-medium mb-4">
+              Edit Todo
+            </h2>
             <input
               type="text"
               ref={inputRef}
               defaultValue={editingTodo.title ?? ""}
               className="border border-gray-300 rounded px-2 py-1 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="border px-2 rounded-lg py-1 mb-4"
-            >
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
+            <div className="flex items-center gap-2 mb-4">
+            
+              <p className="font-semibold text-foreground">Category</p>
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="border px-2 rounded-lg py-1"
+              >
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div className="flex justify-end space-x-3">
               <button
                 onClick={handleEditClose}
